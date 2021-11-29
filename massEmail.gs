@@ -11,7 +11,6 @@ var parentEmailHeader = 'Email Address'
 var tutorNameHeader = "Volunteer"
 var tutorEmailHeader = "Volunteer email address"
 
-
 // Email subject
 var subject = "Academic Outreach Tutor"
 
@@ -22,7 +21,7 @@ function generateMessage_(tutorName,studentName,studentEmail,parentEmail) {
   return message;
 }
 
-// Do not edit past this point
+/** Do not edit past this point */
 
 function sendEmails() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
