@@ -6,6 +6,7 @@ Note: daily email limit of 100
 
 // CASE SENSTITIVE Header names (to be plugged into the email template)
 // The sheet the headers are in is irrelevant; the script will iterate over all headers over all sheets in the ss
+// FUTURE EDITS: make it into a dictionary. key:vars and value:string
 var studentNameHeader = "Student's Full Name"
 var studentEmailHeader = "Student's GNPS email address"
 var parentEmailHeader = 'Email Address'
@@ -29,6 +30,11 @@ Do not edit past this point
 
 */
 
+// run and then check execution log for remaining emails
+function logRemainingEmails() {
+  Logger.log(MailApp.getRemainingDailyQuota())
+}
+
 function sendEmails() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
 
@@ -46,7 +52,7 @@ function sendEmails() {
 
   // find which columns contain the placeholder info by using predefined header names
   // FUTURE EDIT: automatically find the column that each header value is in
-  
+
   for (i in headerData) {
     // find the column that parent email is in
     if (headerData[i] == parentEmailHeader) {
@@ -122,6 +128,6 @@ function sendEmails() {
     var message = generateMessage_(tutorName, studentName, studentEmail, parentEmail)
 
     // send the emails
-    MailApp.sendEmail(tutorEmail, subject, message);
+    //MailApp.sendEmail(tutorEmail, subject, message);
   }
 }
