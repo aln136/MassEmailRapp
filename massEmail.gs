@@ -1,15 +1,17 @@
 /**
 Sends emails with data from the spreadsheet using an email template
+
+Note: daily email limit of 100
 */
 
-// Note: daily email limit of 100
-
-// CASE SENSTITIVE Header names (to be plugged into email template) 
+// CASE SENSTITIVE Header names (to be plugged into the email template)
+// The sheet the headers are in is irrelevant; the script will iterate over all headers over all sheets in the ss
 var studentNameHeader = "Student's Full Name"
 var studentEmailHeader = "Student's GNPS email address"
 var parentEmailHeader = 'Email Address'
 var tutorNameHeader = "Volunteer"
 var tutorEmailHeader = "Volunteer email address"
+
 
 // Email subject
 var subject = "Academic Outreach Tutor"
@@ -21,12 +23,17 @@ function generateMessage_(tutorName,studentName,studentEmail,parentEmail) {
   return message;
 }
 
-/** Do not edit past this point */
+/**
+
+Do not edit past this point
+
+*/
 
 function sendEmails() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
 
   // make one array of all header names across the entire ss
+  // header names defined as first row of each column
   for (i in ss.getSheets()) {
     if (i == 0) {
       headerData = ss.getSheets()[i].getRange("A1:Z1").getValues()[0]
@@ -38,6 +45,8 @@ function sendEmails() {
   }
 
   // find which columns contain the placeholder info by using predefined header names
+  // FUTURE EDIT: automatically find the column that each header value is in
+  
   for (i in headerData) {
     // find the column that parent email is in
     if (headerData[i] == parentEmailHeader) {
@@ -111,6 +120,8 @@ function sendEmails() {
 
     // generate the message using found placeholder values
     var message = generateMessage_(tutorName, studentName, studentEmail, parentEmail)
+
+    // send the emails
     MailApp.sendEmail(tutorEmail, subject, message);
   }
 }
